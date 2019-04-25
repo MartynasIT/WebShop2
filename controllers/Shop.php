@@ -29,7 +29,7 @@ class Shop extends CI_Controller {
         $data2['categories'] = $this->category_model->getAllcategories();
         $this->load->view('templates/page_header');
         $this->load->view('templates/page_categories',$data2);
-        $this->load->view('main', $data);
+        $this->load->view('index', $data);
 		}
        
     public function  product ($id = NULL)
