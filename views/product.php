@@ -27,7 +27,7 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
 
-</head>
+
 
    <div class="main">
 		<div class="content">
@@ -90,7 +90,7 @@
 						    </div>
 						    <div><span><label>Summary of Your Review<span class="red">*</span></label></span>
 						    	<span><input type="text" value=""></span>
-						    </div>						
+						    </div>
 						    <div>
 						    	<span><label>Review<span class="red">*</span></label></span>
 						    	<span><textarea> </textarea></span>
@@ -99,7 +99,7 @@
 						   		<span><input type="submit" value="Submit review"></span>
 						  </div>
 					    </form>
-				  	 </div>				
+				  	 </div>
 				</div>
 			</div>
 		 </div>

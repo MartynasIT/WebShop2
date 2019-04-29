@@ -175,24 +175,7 @@ class Admin extends CI_Controller
         $this->load->view('admin/admin_search', $data);
     }
 
-    /*
-        private function removeUser()
-        {
-            $this->form_validation->set_rules('customer_name', 'Usernamas', 'required');
 
-            if ($this->form_validation->run() == TRUE) {
-
-                $this->db->where('username', $_POST['customer_name']);
-                if (  $this->db->delete('users')) {
-                    $this->session->set_flashdata("success", "Istrinta!");
-                    redirect('admin/dashboard', "refresh");
-                }
-                else
-                {
-                    $this->session->set_flashdata("error", "Klaida!");
-                    redirect('admin/ruser', "refresh");
-                }
-            } */
 
 
     public function removeUser($id = NULL)
@@ -202,7 +185,7 @@ class Admin extends CI_Controller
             $this->db->where('id', $id);
             $this->db->delete('user');
             $this->session->set_flashdata("success", "Removed");
-            redirect('Admin/dashboard', "refresh");
+            redirect('Admin/userinformation', "refresh");
 
 
     }
@@ -324,11 +307,6 @@ class Admin extends CI_Controller
 
         }
         }
-
-
-
-
-
 
 
 
