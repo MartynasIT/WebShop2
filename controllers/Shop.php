@@ -35,12 +35,21 @@ class Shop extends CI_Controller {
     public function  product ($id = NULL)
     {
         $this->load->model('Product_model');
-        $data['product'] = $this->product_model->getOneProduct($id);
-        $data6['categories'] = $this->category_model->getAllcategories();
+        $this->load->model('review_model');
+        $data4['product'] = $this->product_model->getOneProduct($id);
+        $data4['reviews'] = $this->review_model->getAllreviews($id);
         $this->load->view('templates/page_header');
         $this->load->view('templates/page_header_bottom');
-        $this->load->view('product',$data, $data6);
+        $this->load->view('product',$data4);
         $this->load->view('templates/page_footer');
+
+        if (isset($_POST['postreview'])) {
+
+
+            $this->review();
+
+        }
+
 
     }
 
@@ -332,7 +341,44 @@ public function add_wishlist($id = NULL)
 
     }
 
+public function review()
+{
 
 
+    if ($_POST['review'] == '') {
+
+
+
+
+    } else {
+
+        $this->load->model('review_model');
+        $name = $this->review_model->getname($this->session->user_id);
+        $name2 = $this->review_model->getlname($this->session->user_id);
+        $data = array(
+
+            'review' => $_POST['review'],
+            'customerid' => $this->session->user_id,
+            "productid" => $_POST['pid'],
+            "cname" =>  $name." ".$name2
+
+
+        );
+
+
+        if ($this->db->insert('reviews', $data)) {
+
+            $this->session->set_flashdata("success", "Posted!");
+            redirect($_SERVER['REQUEST_URI'], 'refresh');
+
+        } else {
+
+            $this->session->set_flashdata("error", "Nepavyko!");
+            redirect($_SERVER['REQUEST_URI'], 'refresh');
+        }
+    }
+
+
+}
 
 }

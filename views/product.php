@@ -72,39 +72,72 @@
 								</div>
 			
 						<br>
+
+                    <form method="post">
 				<div class="review">
-					<h4>Review by none</a></h4>
-					 <ul>
-					 	<li>Price :<img src="<?php echo base_url(); ?>assets/images/price-rating.png" alt="" /></a></li>
-					 	<li>Value :<img src="<?php echo base_url(); ?>assets/images/value-rating.png" alt="" /></a></li>
-					 	<li>Quality :<img src="<?php echo base_url(); ?>assets/images/quality-rating.png" alt="" /></a></li>
-					 </ul>
+
 					 <br>
-				  <div class="your-review">
+
+                    <div id = 'login' style ="visibility: hidden;">
+
+                        <p style="text-align: center; color: #990000; font-size: medium"> To review you must login!</p>
+                    </div>
+
+				  <div class="your-review" id  = "your-review" style ="visibility: hidden;">
 				  	 <h3>How Do You Rate This Product?</h3>
 				  	  <p><span>* - Must be included</span></p>
 				  	  <form>
-					    	<div>
-						    	<span><label>Nickname<span class="red">*</span></label></span>
-						    	<span><input type="text" value=""></span>
-						    </div>
-						    <div><span><label>Summary of Your Review<span class="red">*</span></label></span>
-						    	<span><input type="text" value=""></span>
-						    </div>
+
+
 						    <div>
 						    	<span><label>Review<span class="red">*</span></label></span>
-						    	<span><textarea> </textarea></span>
+                                <textarea rows="4" cols="50" name="review" required>
+</textarea>
 						    </div>
+
+                          <input id = "pid" name = "pid" type="hidden" value="<?php echo $product['ProduktoID']; ?>">
 						   <div>
-						   		<span><input type="submit" value="Submit review"></span>
+
+						   		<span><input name="postreview" type="submit" value="Submit review"></span>
 						  </div>
 					    </form>
 				  	 </div>
 				</div>
+
+                        <div id = 'all'>
+
+                        <?php foreach ($reviews as $keys=>$p) :?>
+
+                        </br>
+
+
+
+                        <div id = "reviews" style="   border-radius: 25px; border: 2px solid  #990000;  padding: 20px;
+  ">
+
+
+                            <p style="display: inline-block; font-size: large; color: #990000; font-family: 'Arial Black';">  <?php echo $p->cname;?>  </p>
+
+
+
+                                <p  style="display: inline; margin-left: 65%; position:relative;">   <?php echo $p->date;?>  </p>
+
+
+                            </br>
+                            </br>
+
+
+                            <p style="font-size: large; font-family: 'Times New Roman';"> <?php echo $p->review;?> </p>
+
+
+                        </div>
+
+                        <?php endforeach;?>
+                        </div>
 			</div>
 		 </div>
 	 </div>
-	    
+
         </div>
 
  		</div>
@@ -118,6 +151,26 @@
 		});
 	</script>
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+
+            <?php
+            if ($_SESSION['is_logged_in'] ==  true)
+            {
+
+                ?>
+                <script type="text/javascript">document.getElementById('your-review').style.visibility = 'visible';</script>
+            <?php
+            }
+
+            else
+            {
+
+            ?>
+                <script type="text/javascript">document.getElementById('login').style.visibility = 'visible';</script>
+                <script type="text/javascript">document.getElementById('your-review').style.visibility = 'hidden';</script>
+            <script type="text/javascript"> $('#your-review').html(''); </script>
+                <?php
+            }
+            ?>
 </body>
 </html>
 
