@@ -6,13 +6,25 @@ class review_model extends CI_Model
         $this->load->database();
     }
 
-    public function getAllreviews($id = false)
+
+    public function record_count($id) {
+
+
+        $this->db->from('reviews');
+        $this->db->where('productid',$id);
+        return $this->db->count_all_results();
+    }
+
+
+    public function getAllreviews($id , $limit, $start)
     {
+
 
 
         $this->db->from('reviews');
         $this->db->where('productid',$id);
         $this->db->order_by('date','desc');
+        $this->db->limit($limit, $start);
         $query =  $this->db->get();
         return $query->result();
     }

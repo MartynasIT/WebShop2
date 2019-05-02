@@ -6,9 +6,18 @@ class UserInformation_model extends CI_Model
         $this->load->database();
     }
 
-    public function getAllusers()
+    public function countAllusers()
     {
 
+        $this->db->from('user');
+        return $this->db->count_all_results();
+
+    }
+
+
+    public function getAllusers($limit, $start)
+    {
+        $this->db->limit($limit, $start);
         $query=$this->db->get('user');
         return $query->result();
 

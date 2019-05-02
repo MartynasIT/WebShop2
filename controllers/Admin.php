@@ -184,6 +184,8 @@ class Admin extends CI_Controller
 
             $this->db->where('id', $id);
             $this->db->delete('user');
+            $this->db->where('customerid', $id);
+            $this->db->delete('reviews');
             $this->session->set_flashdata("success", "Removed");
             redirect('Admin/userinformation', "refresh");
 
@@ -223,9 +225,9 @@ class Admin extends CI_Controller
 
     public function do_upload()
     {
-        $config['upload_path'] = "./assets/img";
+        $config['upload_path'] = "./assets";
         $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = 100;
+        $config['max_size'] = 1000;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
 
@@ -316,7 +318,17 @@ class Admin extends CI_Controller
 
 
         $this->load->model('UserInformation_model');
-        $data['user'] = $this->UserInformation_model->getAllusers();
+        $this->load->library("pagination");
+        $this->load->helper("url");
+        $config = array();
+        $config["base_url"] = base_url() . "admin/userinformation";
+        $config['total_rows'] = $this->UserInformation_model->countAllusers();
+        $config["per_page"] = 100; // 100 users per page
+        $config["uri_segment"] = 3;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $data['user'] = $this->UserInformation_model->getAllusers($config["per_page"], $page);
+        $data["links"] = $this->pagination->create_links();
         $this->load->view('Admin/userinformation', $data);
         $this->load->view('templates/page_footer');
     }

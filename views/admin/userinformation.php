@@ -45,11 +45,10 @@
 </table>
 
 
-
                 <?php endforeach;?>
             </form>
 
-
+        <p style="font-family: 'Arial Black'; font-size: large; color: #990000;"><?php echo $links; ?></p>
 
           </div>
     </div>

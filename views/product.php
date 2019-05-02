@@ -134,6 +134,8 @@
 
                         <?php endforeach;?>
                         </div>
+                        </br>
+                        <p style="font-family: 'Arial Black'; font-size: large; color: #990000;"><?php echo $links; ?></p>
 			</div>
 		 </div>
 	 </div>

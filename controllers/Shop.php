@@ -36,8 +36,18 @@ class Shop extends CI_Controller {
     {
         $this->load->model('Product_model');
         $this->load->model('review_model');
+        $this->load->library("pagination");
+        $this->load->helper("url");
+        $config = array();
+        $config["base_url"] = base_url() . "shop/product/$id";
+        $config['total_rows'] = $this->review_model->record_count($id);
+        $config["per_page"] = 6;
+        $config["uri_segment"] = 4;
+        $this->pagination->initialize($config);
+        $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $data4['product'] = $this->product_model->getOneProduct($id);
-        $data4['reviews'] = $this->review_model->getAllreviews($id);
+        $data4['reviews'] = $this->review_model->getAllreviews($id, $config["per_page"], $page);
+        $data4["links"] = $this->pagination->create_links();
         $this->load->view('templates/page_header');
         $this->load->view('templates/page_header_bottom');
         $this->load->view('product',$data4);
