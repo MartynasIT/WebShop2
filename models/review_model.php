@@ -60,4 +60,38 @@ class review_model extends CI_Model
 
         return $name;
     }
+
+    public function getRating($cid,$pid)
+    {
+        $this->db->from('product_rating');
+        $this->db->where('userid',$cid);
+        $this->db->where('productid',$pid);
+
+        $query = $this->db->get();
+        $rating = "";
+        foreach ($query->result() as $row)
+        {
+            $rating =  $row->rating;
+
+        }
+
+        return $rating;
+
+
+    }
+
+
+
+    public function getAVG($pid)
+    {
+        $this->db-> select_avg ('rating');
+        $this->db->where('productid',$pid);
+        $result = $this->db->get('product_rating')->row();
+        return $result->rating;
+
+
+
+    }
+
+
 }

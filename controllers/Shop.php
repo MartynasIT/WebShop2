@@ -47,6 +47,8 @@ class Shop extends CI_Controller {
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $data4['product'] = $this->product_model->getOneProduct($id);
         $data4['reviews'] = $this->review_model->getAllreviews($id, $config["per_page"], $page);
+        $data4['rating'] = $this->review_model->getRating($this->session->user_id,$id);
+        $data4['avg'] = $this->review_model->getAVG($id);
         $data4["links"] = $this->pagination->create_links();
         $this->load->view('templates/page_header');
         $this->load->view('templates/page_header_bottom');
@@ -57,6 +59,13 @@ class Shop extends CI_Controller {
 
 
             $this->review();
+
+        }
+
+        if (isset($_POST['rating'])) {
+
+
+            $this->rating($id);
 
         }
 
@@ -390,5 +399,72 @@ public function review()
 
 
 }
+
+
+    public function rating($id = NULL)
+    {
+        $this->load->model('review_model');
+
+        $rating = $this->review_model->getRating($this->session->user_id,$id);
+       if ( $rating != "" && $_POST['rate'] <= 5 && $_POST['rate'] >=0 )
+
+       {
+
+
+           $data = array(
+               'userid' => $this->session->user_id,
+               'productid' => $id,
+                'rating' =>  $_POST['rate']
+
+           );
+
+           $this->db->where("userid", $this->session->user_id);
+           if ($this->db->update("product_rating", $data)) {
+               $this->session->set_flashdata("success", "Success!");
+               redirect($_SERVER['REQUEST_URI'], 'refresh');
+
+           } else {
+
+               $this->session->set_flashdata("error", "Error!");
+               redirect($_SERVER['REQUEST_URI'], 'refresh');
+           }
+
+
+
+       }
+
+       else {
+
+           if ( $_POST['rate'] == 5 ||  $_POST['rate'] == 4 || $_POST['rate'] == 3  ||$_POST['rate'] == 2 ||  $_POST['rate'] == 1 ||  $_POST['rate'] == 0)  {
+               $data = array(
+
+                   'userid' => $this->session->user_id,
+                   "productid" => $_POST['pid'],
+                   "rating" => $_POST['rate']
+
+
+               );
+
+               if ($this->db->insert('product_rating', $data)) {
+
+                   $this->session->set_flashdata("success", "Posted!");
+                   redirect($_SERVER['REQUEST_URI'], 'refresh');
+
+               } else {
+
+                   $this->session->set_flashdata("error", "Nepavyko!");
+                   redirect($_SERVER['REQUEST_URI'], 'refresh');
+               }
+
+
+           } else {
+
+               $this->session->set_flashdata("error", "You must enter a number from 0 to 5!");
+               redirect($_SERVER['REQUEST_URI'], 'refresh');
+
+           }
+
+       }
+    }
 
 }

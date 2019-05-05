@@ -73,20 +73,46 @@
 			
 						<br>
 
-                    <form method="post">
+
 				<div class="review">
 
 					 <br>
 
+                    <p style="text-align: center; font-size: large; color: #990000;"> Average rating is: <?php echo number_format((float)$avg, 1, '.', ''); ?> </p>
+
                     <div id = 'login' style ="visibility: hidden;">
 
                         <p style="text-align: center; color: #990000; font-size: medium"> To review you must login!</p>
+
                     </div>
+                    <form id = "ratingform" method="post">
+
 
 				  <div class="your-review" id  = "your-review" style ="visibility: hidden;">
-				  	 <h3>How Do You Rate This Product?</h3>
+
+
+                      <div style="text-align: center;" id = "rating">
+
+                          <input id = "pid" name = "pid" type="hidden" value="<?php echo $product['ProduktoID']; ?>">
+
+                          <p> Rate the product from 0 to 5!</p>
+
+                          <input style ="width: 4%; height: 34px; font-size: large; text-align: center;" id = "rate" name = "rate"  value="<?php echo  $rating; ?>">
+                          <input  name="rating" type="submit" value="Rate">
+
+
+                          </form>
+                      </div>
+
+                    <?php if ($this->session->flashdata('error')) {
+                        ?> <div style="text-align: center; color: #990000; font-size: x-large;"> <?= $this->session->flashdata('error') ?> </div>
+                        <?php
+                    } ?>
+
+				  	 <h3>How Do You Like This Product?</h3>
 				  	  <p><span>* - Must be included</span></p>
-				  	  <form>
+
+                      <form id = "reviewform" method="post">
 
 
 						    <div>
