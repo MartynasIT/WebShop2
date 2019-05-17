@@ -9,6 +9,7 @@ class Admin extends CI_Controller
         $this->load->model('UserInformation_model');
         $this->load->helper('url_helper');
         $this->load->library(array('session', 'form_validation'));
+        error_reporting(0);
 
         if (!$_SESSION ['admin_logged'] == TRUE) {
 
@@ -44,7 +45,7 @@ class Admin extends CI_Controller
     private function update()
     {
 
-        $this->form_validation->set_rules('product_image', 'Image', 'required');
+
         $this->form_validation->set_rules('product_description', 'Description', 'required');
         $this->form_validation->set_rules('product_name', 'Name', 'required');
         $this->form_validation->set_rules('product_price', 'Price', 'required');
@@ -54,7 +55,7 @@ class Admin extends CI_Controller
 
             $data = array(
 
-                'Nuotrauka' => $_POST['product_image'],
+                'Nuotrauka' => $this->session->userdata['image'],
                 'Aprasymas' => $_POST['product_description'],
                 'TrumpasApras' => $_POST ['product_shortdescr'],
                 'Kaina' => $_POST['product_price'],
@@ -68,10 +69,14 @@ class Admin extends CI_Controller
             $this->db->where("ProduktoID", $_POST['product_id']);
             if ($this->db->update("Produktai", $data)) {
 
+                unset ($_SESSION["image"]);
+
                 $this->session->set_flashdata("success", "Atnaujinta!");
                 redirect('admin/dashboard', "refresh");
 
             } else {
+
+                unset ($_SESSION["image"]);
 
                 $this->session->set_flashdata("error", "Nepavyko!");
                 redirect('admin/dashboard', "refresh");
@@ -82,6 +87,7 @@ class Admin extends CI_Controller
 
     public function createuser()
     {
+        unset ($_SESSION["image"]);
         $this->form_validation->set_rules('firstname', 'First Name', 'trim|required|alpha|min_length[3]|max_length[50]');
         $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required|alpha|min_length[3]|max_length[50]');
         $this->form_validation->set_rules('telephoneno', 'Telephone No.', 'trim|required|min_length[3]|max_length[50]');
@@ -116,7 +122,7 @@ class Admin extends CI_Controller
     private function newp()
     {
 
-        $this->form_validation->set_rules('product_image', 'Image', 'required');
+
         $this->form_validation->set_rules('product_description', 'Description', 'required');
         $this->form_validation->set_rules('product_name', 'Name', 'required');
         $this->form_validation->set_rules('product_price', 'Price', 'required');
@@ -125,7 +131,7 @@ class Admin extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             $data = array(
 
-                'Nuotrauka' => $_POST['product_image'],
+                'Nuotrauka' => $this->session->userdata['image'],
                 'Aprasymas' => $_POST['product_description'],
                 'TrumpasApras' => $_POST ['product_shortdescr'],
                 'Kaina' => $_POST['product_price'],
@@ -139,10 +145,14 @@ class Admin extends CI_Controller
 
             if ($this->db->insert('Produktai', $data)) {
 
+                unset ($_SESSION["image"]);
+
                 $this->session->set_flashdata("success", "Prideta!");
                 redirect('admin/dashboard', "refresh");
 
             } else {
+
+                unset ($_SESSION["image"]);
 
                 $this->session->set_flashdata("error", "Nepavyko!");
                 redirect('admin/add', "refresh");
@@ -169,6 +179,7 @@ class Admin extends CI_Controller
 
     function search_keyword()
     {
+        unset ($_SESSION["image"]);
         $this->load->model('search_model');
         $keyword = $this->input->post('keyword');
         $data['results'] = $this->search_model->search($keyword);
@@ -196,7 +207,7 @@ class Admin extends CI_Controller
     public function Dashboard()
     {
 
-
+        unset ($_SESSION["image"]);
         $this->load->model('Product_model');
         $data['products'] = $this->Product_model->getAllproducts();
         $this->load->view('Admin/Dashboard', $data);
@@ -222,25 +233,6 @@ class Admin extends CI_Controller
 
     }
 
-
-    public function do_upload()
-    {
-        $config['upload_path'] = "./assets";
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = 1000;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
-
-
-        $this->load->library('upload', $config);
-
-
-        if (!$this->upload->do_upload('userfile')) {
-            print_r($this->upload->display_errors());
-            die();
-        }
-
-    }
 
 
     public function add()
@@ -315,7 +307,7 @@ class Admin extends CI_Controller
     public function userinformation()
     {
 
-
+        unset ($_SESSION["image"]);
 
         $this->load->model('UserInformation_model');
         $this->load->library("pagination");

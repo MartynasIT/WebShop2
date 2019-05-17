@@ -10,6 +10,10 @@ class Shop extends CI_Controller {
         $this->load->model('category_model');
         $this->load->model('search_model');
         $this->load->helper('url_helper');
+        if ($_SESSION ['admin_logged'] == TRUE) {
+
+            redirect("Admin/dashboard", "refresh");
+        }
         error_reporting(0);
 
         if ($_SESSION['cart'] == FALSE || $_SESSION['cart'] == '' || $_SESSION['cart'] == '-1' ||  $_SESSION['total'] == '0') {

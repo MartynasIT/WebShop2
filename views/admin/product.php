@@ -10,7 +10,7 @@
 
 <?php echo validation_errors('<div class="alert alert-danger" >','</div>'); ?>
 
-<form method="post" id="edit" class="variantdisplay">
+
 
    <div class="main">
 		<div class="content">
@@ -18,14 +18,38 @@
 					<div class="cont-desc span_1_of_2">
 					  <div class="product-details">				
 						<div class="grid images_3_of_2">
-                       
 
-                        Photo:<img src="<?php echo base_url(); ?>assets/images/<?php echo $product['Nuotrauka']; ?>" alt="" />
-                
-<input type="file" name="fileToUpload" id="fileToUpload">  <br>          
-<input type="text" style="font-size:10pt;height:50px" name="product_image" value="<?php echo $product['Nuotrauka'];?>" size="30" maxlength="50">
-<br>
-    <input type="submit" value="Upload Image" name="submit">
+
+
+                     <img src="<?php echo base_url(); ?>assets/images/<?php echo $product['Nuotrauka']; ?>" alt="" />
+
+
+                            <p style="font-size: large; "> New Image: <br></p>
+
+                            <?php echo form_open_multipart('upload_controller/do_upload');?>
+                            <?php echo "<input type='file' name='userfile' size='20' />"; ?>
+                            <?php echo "<input type='submit' name='submit' value='upload' /> ";?>
+                            <?php echo "</form>"?>
+
+                            <?php
+
+
+
+                            if( $this->session->userdata['image']  != 'Upload failed' &&  $this->session->userdata('image')  ) {
+
+
+                                echo "<p style='color: darkgreen;'> Image uploaded: <p>";  echo $this->session->userdata['image'];
+
+
+                            }
+                            else
+                            {
+                                echo $this->session->userdata['image'];
+                            }
+                            ?>
+
+                            <form method="post" id="edit" class="variantdisplay">
+
                         </div>
 				<div class="desc span_3_of_2">
 					Product name:<h2> <input  type="text" style="font-size:10pt;height:50px" name="product_name" value="<?php echo $product['Pavadinimas'];?>" size="30" maxlength="9000">  </h2>
@@ -54,8 +78,11 @@
                     </br>
                     </br>
 
-                    <H1>Subcategory:</H1>   <select name="product_category2" ">
+                    <H1>Subcategory:</H1>   <select name="product_category2" >
 
+                    <option value="New Products"><?php echo $product['Kategorija2'];?></option>
+
+                        <option value="New Products">None</option>
                     <option value="New Products">New Products</option>
 
 
@@ -64,23 +91,6 @@
 
 
 
-                    <option value="Phone">PS4</option>
-
-
-
-                    <option value="Accesories">Xbox One</option>
-
-
-
-                    <option value="Desktop PC">PS4</option>
-
-
-
-                    <option value="Game">PC</option>
-
-
-
-                    <option value="Laptop">Dell</option>
 
 
                     </select>
