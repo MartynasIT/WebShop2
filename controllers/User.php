@@ -1,6 +1,6 @@
 <?php
 class User extends CI_Controller {
- 
+
     public function __construct()
     {
         parent::__construct();
@@ -8,12 +8,12 @@ class User extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library(array('session', 'form_validation'));
     }
- 
+
     public function index()
     {
         $this->load->view('index');
-    } 
-    
+    }
+
     public function create()
     {
         if (!$this->session->userdata('is_logged_in')) {
@@ -21,7 +21,7 @@ class User extends CI_Controller {
         } else {
             $data['user_id'] = $this->session->userdata('user_id');
         }
-    }   
+    }
     public function register()
     {
         $this->form_validation->set_rules('firstname', 'First Name', 'trim|required|alpha|min_length[3]|max_length[50]');
@@ -33,54 +33,54 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|is_unique[user.email]');
         $this->form_validation->set_rules('password', 'Password', 'trim|min_length[6]|required|matches[cpassword]');
         $this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]');
-        
+
         $data['title'] = 'Register';
-        
+
         if ($this->form_validation->run() === FALSE)
-        {            
+        {
             $this->load->view('templates/header', $data);
             $this->load->view('user/register');
 
             $this->load->view('templates/page_footer');
- 
+
         }
         else
-        { 
+        {
             if ($this->user_model->set_user())
-            {                             
+            {
                 $this->session->set_flashdata('msg_success','Success, You can login!');
                 redirect('user/register');
 
             }
             else
-            {                
+            {
                 $this->session->set_flashdata('msg_error','Error! Please try again later.');
                 redirect('user/register');
             }
         }
     }
-    
+
     public function login()
-    {        
+    {
         $email = $this->input->post('email');
-        $password = $this->input->post('password'); 
-        
+        $password = $this->input->post('password');
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');        
-        
+        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+
         $data['title'] = 'Login';
-        
+
         if ($this->form_validation->run() === FALSE)
-        {            
+        {
             $this->load->view('templates/header', $data);
             $this->load->view('user/login');
             $this->load->view('templates/page_footer');
- 
+
         }
         else
-        { 
+        {
             if ($user = $this->user_model->get_user_login($email, $password))
-            {   
+            {
 
                 if ($user['Admin'] == 1)
                 {
@@ -109,20 +109,20 @@ class User extends CI_Controller {
             else
             {
                 $this->session->set_flashdata('msg_error','Login credentials does not match!');
-                
+
                 $currentClass = $this->router->fetch_class(); // class = controller
                 $currentAction = $this->router->fetch_method(); // action = function
-                
+
                 redirect("$currentClass/$currentAction");
 
             }
         }
     }
-    
+
     public function logout()
-    {    
+    {
         if ($this->session->userdata('is_logged_in')) {
-            
+
             $this->session->unset_userdata('email');
             $this->session->unset_userdata('is_logged_in');
             $this->session->unset_userdata('user_id');
@@ -131,16 +131,16 @@ class User extends CI_Controller {
         redirect('/user/login');
     }
 
-    
-    
 
 
-    
+
+
+
 
     private function update()
     {
         $this->form_validation->set_rules('firstname', 'First Name', 'trim|required|alpha|min_length[3]|max_length[50]');
-        $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required|alpha|min_length[3]|max_length[50]');       
+        $this->form_validation->set_rules('lastname', 'Last Name', 'trim|required|alpha|min_length[3]|max_length[50]');
         $this->form_validation->set_rules('telephoneno', 'Telephone No.', 'trim|required|min_length[3]|max_length[50]');
         $this->form_validation->set_rules('country', 'Country', 'trim|required|min_length[3]|max_length[50]');
         $this->form_validation->set_rules('address', 'Address', 'trim|required|min_length[3]|max_length[50]');
@@ -148,7 +148,7 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'trim|min_length[6]|required|matches[cpassword]');
         $this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|required|matches[password]');
 
-            
+
 
             if ($this->form_validation->run()) {
 
@@ -206,4 +206,54 @@ class User extends CI_Controller {
         else redirect(site_url('user/login'));
 
     }
+    private function spam ()
+  {
+
+      $this->load->helper('email');
+      $this->form_validation->set_rules('emailSpam', 'Email', 'required|is_unique[spam.email]|valid_email');
+
+
+      if ($this->form_validation->run() == TRUE) {
+
+          $config = Array(
+              'protocol' => 'smtp',
+              'smtp_host' => 'ssl://smtp.googlemail.com',
+              'smtp_port' => 465,
+              'smtp_user' => 'webdemo19@gmail.com', // change it to yours
+              'smtp_pass' => 'gedas123', // change it to yours
+              'mailtype' => 'html',
+              'charset' => 'iso-8859-1',
+              'wordwrap' => TRUE
+          );
+
+          $message = 'Spam hohohoho';
+          $this->load->library('email', $config);
+          $this->email->set_newline("\r\n");
+          $this->email->from('webdemo19@gmail.com'); // change it to yours
+          $this->email->to($_POST['emailSpam']);// change it to yours
+          $this->email->subject('Thank you for signin Up for some spam');
+          $this->email->message($message);
+
+          if ($this->email->send()) {
+              $data = array(
+                  'email' => $_POST['emailSpam'],
+
+              );
+              $this->db->insert('spam', $data);
+              $this->session->set_flashdata("success", "Dekui!");
+          } else {
+              $data2 = array(
+                  'ip' => $this->input->ip_address(),
+                  'attempt' => "SMTP Klaida bandant siusti",
+                  'date' => date('Y-m-d H:i:s')
+
+
+              );
+              $this->db->insert('log', $data2);
+          }
+
+
+      }
+  }
+
 }

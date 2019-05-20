@@ -7,10 +7,12 @@
 					<li><a href="/information/delivery">Delivery</a></li>
 					<li><a href="/information/orders_and_returns">Orders and Returns</a></li>
 			    	<li><a href="/information/news">News</a></li>
+							<li><a href="/information/paytm">paytm</a></li>
                     <li><a href="/questions/faq">Frequently Asked Questions</a></li>
+										<li><a href="/Send_email">Email</a></li>
                     <li><a href="<?php echo site_url('shop/filter'); ?>">Filter</a></li>
                     <li><a href="<?php echo site_url('shop/chat'); ?>">Chat</a></li>
-				
+
 					<li><form action="<?php echo site_url('search/search_keyword');?>" method = "post">
                         <input style="display: block; width: 200px;  margin: 0 0 0em; margin-left: 35px;  margin-top: 1em;   ;" type="text" name = "keyword" />
                         <input type="submit" style="display: block; margin-left: 240px; margin-top: -20px; " value = "Product Search" />
@@ -29,7 +31,7 @@
 			<div class="header_bottom_left">
 				<div class="categories">
 				  <ul>
-                      
+
                       <h3>Categories</h3>
                       <?php foreach ($categories as $keys=>$p) :?>
 				      <li><a href="<?php echo base_url(); ?>Shop/category/<?php echo  $p->CategoryName;?>"><?php echo  $p->CategoryName;?></a></li>

@@ -30,6 +30,14 @@ public function contact()
    {
        $this->load->view('information/contact');
 }
+public function paytm()
+   {
+       $this->load->view('txnTest');
+}
+public function contactform()
+   {
+       $this->load->view('contactform');
+}
 
 
 
