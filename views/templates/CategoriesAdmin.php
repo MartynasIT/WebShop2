@@ -2,8 +2,7 @@
     <div class="menu">
         <ul>
             <li class="active"><a href="/admin/dashboard">Admin Home</a></li>
-            <li class="active"><a href="/EmailController">Email</a></li>
-              <li class="active"><a href="/Sendingemail_Controller">Email3</a></li>
+          
             <li><form action="<?php echo site_url('admin/search_keyword');?>" method = "post">
 
                           <input style="display: block; width: 240px; margin: 0 0 0em; margin-left: 30px;  margin-top: 1em; " type="text" name = "keyword" />
