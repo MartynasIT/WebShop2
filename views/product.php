@@ -78,7 +78,7 @@
 
 					 <br>
 
-                    <p style="text-align: center; font-size: large; color: #990000;"> Average rating is: <?php echo number_format((float)$avg, 1, '.', ''); ?> </p>
+                    <p style="text-align: center; font-size: large; color: #990000;"> Average rating is: <?php if ($avg == "Not rated yet") echo "Not rated yet"; else echo number_format((float)$avg, 1, '.', ''); ?> </p>
 
                     <div id = 'login' style ="visibility: hidden;">
 

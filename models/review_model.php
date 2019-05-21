@@ -87,6 +87,9 @@ class review_model extends CI_Model
         $this->db-> select_avg ('rating');
         $this->db->where('productid',$pid);
         $result = $this->db->get('product_rating')->row();
+        if ($result->rating == '')
+            return "Not rated yet";
+        else
         return $result->rating;
 
 
