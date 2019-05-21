@@ -146,7 +146,7 @@
 
 
 
-                                <p  style="display: inline; margin-left: 65%; position:relative;">   <?php echo $p->date;?>  </p>
+                                <p  style="display: inline;">  at  <?php echo $p->date;?>    </p>
 
 
                             </br>
