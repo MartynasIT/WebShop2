@@ -93,7 +93,7 @@
                         <tr>
                             <td align="center">
 
-                              <button  name = "checkout"> Checkout </button>
+                              <a href="/Welcome" > Checkout </a>
 
                             </td>
 
@@ -107,7 +107,6 @@
             </div>
 
         </div>
-    <li><a href="/Welcome" >Pay</a></li>
 
     </div>
     <html>
@@ -190,7 +189,6 @@
 
 
         </div>
-      <input type="submit" name="submit" action="applcation/TxnTest.php" value="Order">
 <?php $this->load->view('templates/page_footer'); ?>
 </body>
 </html>

@@ -9,7 +9,7 @@
 			    	<li><a href="/information/news">News</a></li>
 							<li><a href="/information/paytm">paytm</a></li>
                     <li><a href="/questions/faq">Frequently Asked Questions</a></li>
-										<li><a href="/Send_email">Email</a></li>
+                    
                     <li><a href="<?php echo site_url('shop/filter'); ?>">Filter</a></li>
                     <li><a href="<?php echo site_url('shop/chat'); ?>">Chat</a></li>
 

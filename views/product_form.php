@@ -104,11 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="row">
 		<!-- Main jumbotron for a primary marketing message or call to action -->
 	    <div class="jumbotron">
-	      <div class="container-fluid">
-	        <h1 class="display-5">Hello, Developers!</h1>
-	        <p>This project will guide you to integrate International Payment Gateway "Stripe" in Codeigniter <span class="badge bg-primary badge-pill text-white"><?php echo CI_VERSION; ?></span> with Bootstrap 4. Understand how Stripe Gateway works and implement to your web/app accordingly. if you need any minor help <a href="<?php echo base_url(); ?>welcome/help">contact us</a> here. You can also use Learn more button below</p>
-	        <p><a class="btn btn-primary btn-lg" href="<?php echo base_url(); ?>Welcome/help" role="button">Learn more &raquo;</a></p>
-	      </div>
+
 	    </div>
     </div>
 </div>
@@ -167,7 +163,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div>
                         </div>
 
-
+                         <div class="form-group">
+                             <input  name="adress" id="adress" class="form-control" placeholder="Adress" autocomplete="off" value="<?php echo set_value('Adress'); ?>" required>
+                         </div>
+                         <div class="form-group">
+                             <input  name="country" id="country" class="form-control" placeholder="Country" autocomplete="off" value="<?php echo set_value('Country'); ?>" required>
+                         </div>
 
 
                         <div class="form-group text-right">
@@ -205,20 +206,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
         <div class="col-md-4">
-        	<div class="card">
-        		<h6 class="card-header bg-primary text-white">
-        			Some Help?
-        		</h6>
-        		<div class="card-body">
-        			<p>Get some real help by browsing these guide from offical source.</p>
-        			<ol>
-        				<li> <a href="https://stripe.com/docs" target="_blank">Stripe Docs</a> </li>
-        				<li> <a href="https://stripe.com/docs/checkout" target="_blank">Stripe Checkout</a></li>
-        				<li> <a href="https://stripe.com/docs/error-codes" target="_blank">Stripe Error Codes</a></li>
 
-        			</ol>
-        		</div>
-        	</div>
         </div>
 
     </div>

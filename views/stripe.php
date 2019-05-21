@@ -15,7 +15,7 @@
 -->
   <?php if($this->session->flashdata('success')){ ?>
                     <div class="alert alert-success text-center">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">ï¿½</a>
                             <p><?php echo $this->session->flashdata('success'); ?></p>
                         </div>
                     <?php } ?>
@@ -71,6 +71,13 @@
     <label>CVC</label>
     <input type="text" name="card_cvc" size="4" autocomplete="off" class="card-cvc form-control" placeholder="Please enter cvc"/>
     </div>
+        <label>Adress</label>
+        <input type="text" name="adress" size="4" autocomplete="off" class="card-cvc form-control" placeholder="Please enter your adress"/>
+    </div>
+    </div>
+    <label>Country</label>
+    <input type="text" name="country" size="4" autocomplete="off" class="card-cvc form-control" placeholder="Please enter your Country"/>
+</div>
     </div>
 
     <div class="col-sm-4">&nbsp;</div>     

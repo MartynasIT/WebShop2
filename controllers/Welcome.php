@@ -40,20 +40,18 @@ class Welcome extends CI_Controller {
 			));
 
 			//item information
-			$itemName = "Stripe Donation";
-			$itemNumber = "PS123456";
-			$itemPrice = 50;
+			$itemPrice = $_SESSION['total'] * 100; //stripes uses cents
 			$currency = "usd";
-			$orderID = "SKA92712382139";
+			$orderID = session_id();
 
 			//charge a credit or a debit card
 			$charge = \Stripe\Charge::create(array(
 				'customer' => $customer->id,
-				'amount'   => $itemPrice,
+				'amount'   => $_SESSION['total'] * 100,
 				'currency' => $currency,
-				'description' => $itemNumber,
+
 				'metadata' => array(
-					'item_id' => $itemNumber
+
 				)
 			));
 
@@ -75,16 +73,15 @@ class Welcome extends CI_Controller {
 				$dataDB = array(
 					'name' => $name,
 					'email' => $email,
-					'card_num' => $card_num,
-					'card_cvc' => $card_cvc,
+					'card_num' => md5($card_num),
+					'card_cvc' => md5($card_cvc),
 					'card_exp_month' => $card_exp_month,
 					'card_exp_year' => $card_exp_year,
-					'item_name' => $itemName,
-					'item_number' => $itemNumber,
-					'item_price' => $itemPrice,
-					'item_price_currency' => $currency,
-					'paid_amount' => $amount,
+					'Order_number' =>$orderID,
+					'paid_amount' =>$_SESSION['total'],
 					'paid_amount_currency' => $currency,
+                    'adress' =>  $_POST['adress'],
+                    'country' => $_POST['country'],
 					'txn_id' => $balance_transaction,
 					'payment_status' => $status,
 					'created' => $date,
@@ -99,6 +96,14 @@ class Welcome extends CI_Controller {
 					}else{
 						echo "Transaction has been failed";
 					}
+                    $this->db->where('cust_id', session_id());
+                    $this->db->delete('cart');
+
+
+                    $_SESSION['cart'] = 0;
+                    $_SESSION['total'] = 0;
+
+
 				}
 				else
 				{
