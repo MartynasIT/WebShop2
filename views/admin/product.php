@@ -60,8 +60,9 @@
 				<div class="product-desc">
                         Description:<p> <input type="text" style="font-size:10pt;height:50px" name="product_description" value="<?php echo $product['Aprasymas'];?>" size="90" maxlength="9000">  </p>
                                 </div>
-
+                    <input type="hidden" name="photo" id = "photo" value="<?php echo $product['Nuotrauka']; ?>" />
                     Category:  <select name="product_category1" >
+
 
                         <option value="<?php echo $product['Kategorija'];?>"><?php echo $product['Kategorija'];?></option>
 

@@ -53,9 +53,14 @@ class Admin extends CI_Controller
 
         if ($this->form_validation->run() == TRUE) {
 
+
+            if ($this->session->userdata('image')  )
+                $image = $this->session->userdata['image'];
+            else $image =$_POST['photo'];
+
             $data = array(
 
-                'Nuotrauka' => $this->session->userdata['image'],
+                'Nuotrauka' => $image,
                 'Aprasymas' => $_POST['product_description'],
                 'TrumpasApras' => $_POST ['product_shortdescr'],
                 'Kaina' => $_POST['product_price'],
@@ -71,14 +76,14 @@ class Admin extends CI_Controller
 
                 unset ($_SESSION["image"]);
 
-                $this->session->set_flashdata("success", "Atnaujinta!");
+                $this->session->set_flashdata("success", "Updated!");
                 redirect('admin/dashboard', "refresh");
 
             } else {
 
                 unset ($_SESSION["image"]);
 
-                $this->session->set_flashdata("error", "Nepavyko!");
+                $this->session->set_flashdata("error", "There was an error!");
                 redirect('admin/dashboard', "refresh");
             }
         }
@@ -109,11 +114,11 @@ class Admin extends CI_Controller
             $this->load->view('templates/page_footer');
         } else {
             if ($this->UserInformation_model->set_user()) {
-                $this->session->set_flashdata('msg_success', 'Sukurta nauja paskyra.');
+                $this->session->set_flashdata('msg_success', 'New account created.');
                 redirect('admin/createuser');
 
             } else {
-                $this->session->set_flashdata('msg_error', 'Klaida, bandykite kurti iš naujo.');
+                $this->session->set_flashdata('msg_error', 'Error try again.');
                 redirect('admin/createuser');
             }
         }
@@ -147,14 +152,14 @@ class Admin extends CI_Controller
 
                 unset ($_SESSION["image"]);
 
-                $this->session->set_flashdata("success", "Prideta!");
+                $this->session->set_flashdata("success", "Added!");
                 redirect('admin/dashboard', "refresh");
 
             } else {
 
                 unset ($_SESSION["image"]);
 
-                $this->session->set_flashdata("error", "Nepavyko!");
+                $this->session->set_flashdata("error", "Something failed!");
                 redirect('admin/add', "refresh");
             }
         }
